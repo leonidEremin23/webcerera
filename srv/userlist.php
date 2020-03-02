@@ -21,9 +21,5 @@ while(list($n1) = fetchRow($res)) {
   $cnt++;
 }
 // формируем объект-ответ
-$obj = (object) [
-  'metka' => 'cerera#userlist',
-  'array' => $usrlist
-];
-$txt = json_encode($obj);
+$txt = Otvet(__FILE__, $usrlist);
 echo $txt;

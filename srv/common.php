@@ -201,3 +201,21 @@ function getParSes($namePar)
   }
   return $par;
 }
+
+/**
+ * формирование ответа
+ * @param $filename - имя файла, как ключ метки
+ * @param $arrout   - массив ответа
+ * @return false|string
+ */
+function  Otvet($filename, $arrout)
+{
+  $metka = 'cerera#' . basename($filename, '.php');
+// формируем объект-ответ
+  $obj = (object) [
+      'metka' => $metka,
+      'array' => $arrout
+  ];
+  $txt = json_encode($obj);
+  return $txt;
+}
