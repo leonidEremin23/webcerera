@@ -1,6 +1,6 @@
 CREATE TABLE users (
    id     int AUTO_INCREMENT PRIMARY KEY        COMMENT 'индекс',
-   usr    varchar(32)                           COMMENT 'имя пользователя',
+   usr    varchar(32) UNIQUE                    COMMENT 'имя пользователя',
    pubkey text                                  COMMENT 'публичный ключ',
    prim   varchar(255)                          COMMENT 'примечание',
    last   datetime                              COMMENT 'дата последнего обращения',
@@ -10,8 +10,8 @@ CREATE TABLE users (
 create table mess
 (
    im     int auto_increment primary key        comment 'индекс сообщения',
-   idfrom int                                   comment 'индекс отправителя',
-   idto   int                                   comment 'индекс получателя',
+   ufrom  varchar(32)                           comment 'отправитель',
+   uto    varchar(32)                           comment 'получатель',
    msg    text                                  comment 'зашифрованное сообщение',
    datr   datetime                              comment 'дата прочтения',
    wdat   timestamp default current_timestamp() comment 'время сообщения'

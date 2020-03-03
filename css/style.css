@@ -1,3 +1,25 @@
 h1 {
     color: #6428dc;
 }
+
+table.spis {
+    border-collapse: collapse;
+}
+
+thead.spis {
+    border:1px solid #4e6c6b;
+    padding: 4px;
+    background-color: #98d7a4;
+    font-size: small;
+}
+th.spis {
+    border:1px solid #4e6c6b;
+    padding: 4px;
+    background-color: #98d7a4;
+    font-size: small;
+}
+
+td.spis {
+    border:1px solid #176c6a;
+    padding: 4px;
+}
