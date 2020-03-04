@@ -14,8 +14,8 @@
  *
  * Ответ:
  * {
- *   "metka":"cerera#send",
- *   "array":["true/false"]
+ *   "data": [],
+ *   "result": true/false
  * }
  *
  */
@@ -24,7 +24,7 @@ require_once "common.php";
 $from = s2s($_REQUEST['from']);        // имя отправителя
 $to   = s2s($_REQUEST['to']);        // имя получателя
 $msg  = s2s($_REQUEST['msg']);  // сообщение
-$otv[0] = 'false';
+$result = false;
 $n1 = getVal("SELECT count(*) FROM users WHERE usr='$from'");
 $n2 = getVal("SELECT count(*) FROM users WHERE usr='$to'");
 if($n1==1 && $n2==1 && strlen($msg)>0) {
@@ -34,9 +34,9 @@ if($n1==1 && $n2==1 && strlen($msg)>0) {
   if($stmt->execute()) {
     // отметим время последнего обращения пользователя "from"
     execSQL("UPDATE users SET last=NOW() WHERE usr='$from'");
-    $otv[0] = 'true';
+    $result = true;
   }
 }
-$txt = Otvet(__FILE__, $otv);
+$txt = Otvet($result);
 echo $txt;
 

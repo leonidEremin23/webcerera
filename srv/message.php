@@ -12,8 +12,8 @@
  *
  * Ответ:
  * {
- *   "metka":"cerera#message",
- *   "array":[от_кого, кому, сообщение, дата_сообщения]
+ *   "data":[от_кого, кому, сообщение, дата_сообщения]
+ *   "result": true/false
  * }
  *
  */
@@ -29,5 +29,5 @@ $a[3] = $w;
 // отметим, что прочитали сообщение
 execSQL("UPDATE mess SET datr=NOW() WHERE im=$im");
 // формируем объект-ответ
-$txt = Otvet(__FILE__, $a);
+$txt = Otvet(!empty($f), $a);
 echo $txt;

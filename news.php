@@ -12,6 +12,7 @@
 
 require_once "srv/common.php";
 
+$dat = date('H:i:s'); //
 echo <<<_EOF
 
 <!DOCTYPE html>
@@ -26,14 +27,16 @@ echo <<<_EOF
 
 _EOF;
 
+echo "$dat<br>\n";
 echo "<table class='spis'>";
-$sql = "SELECT ufrom, uto, wdat FROM mess ORDER BY wdat DESC ";
+$sql = "SELECT ufrom, uto,DATE_FORMAT(wdat,'%H:%i:%s'), LEFT(msg, 64) FROM mess ORDER BY wdat DESC ";
 $rst = queryDb($sql);
-while(list($ufrom, $uto, $wdat) = fetchRow($rst)) {
+while(list($ufrom, $uto, $wdat, $msg) = fetchRow($rst)) {
   echo "<tr>";
   echo "<td class='spis'>$ufrom</td>";
   echo "<td class='spis'>$uto</td>";
   echo "<td class='spis'>$wdat</td>";
+  echo "<td class='spis'><small>$msg</small></td>";
   echo "</tr>\n";
 }
 

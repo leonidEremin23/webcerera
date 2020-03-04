@@ -10,10 +10,10 @@
  *  входные параметры:
  *   usr - имя пользователя
  *
- * * Ответ:
+ * Ответ:
  * {
- *   "metka":"cerera#pubkey",
- *   "array":["true/false", "<public key>"]
+ *   "data": ["<public key>"],
+ *   "result": true/false
  * }
  *
  */
@@ -21,16 +21,14 @@
 require_once "common.php";
 
 $usr = s2s($_REQUEST['usr']);        // имя пользователя
-$pubkey = s2s($_REQUEST['pubkey']);  // публичный ключ
-$otv[0] = 'false';
-$otv[1] = '';
+$otv[0] = '';
+$result = false;
 if(strlen($usr) > 0) {
-  $sql = "select pubkey from users where usr='$usr'";
-  $pubkey = getVal($sql);
-  if (strlen($pubkey) > 2) {
-    $otv[0] = "true";
-    $otv[1] = $pubkey;
+  $pubkey = getVal("SELECT pubkey FROM users WHERE usr='$usr'");
+  if(strlen($pubkey) > 16) {
+    $result = true;
+    $otv[0] = $pubkey;
   }
 }
-$txt = Otvet(__FILE__, $otv);
+$txt = Otvet($result, $otv);
 echo $txt;

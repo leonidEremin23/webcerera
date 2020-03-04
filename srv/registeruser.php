@@ -13,8 +13,8 @@
  *
  * Ответ
  * {
- *   "metka":"cerera#registeruser",
- *   "array":["true/false"]
+ *   "data": [],
+ *   "result": true/false
  * }
  *
  */
@@ -22,16 +22,16 @@ require_once "common.php";
 
 $usr = s2s($_REQUEST['usr']);        // имя пользователя
 $pubkey = s2s($_REQUEST['pubkey']);  // публичный ключ
-$otv[0] = 'false';
-if(strlen($usr) > 0) {
+$result = false;
+if(strlen($usr) > 0 && strlen($pubkey) > 16) {
   $sql = "select count(*) from users where usr='$usr'";
   $num = intval(getVal($sql));
   if ($num < 1) {
     $sql = "INSERT INTO users (usr,pubkey) VALUES ('$usr', '$pubkey')";
     $a = execSQL($sql);
     if ($a)
-      $otv[0] = 'true';
+      $result = true;
   }
 }
-$txt = Otvet(__FILE__, $otv);
+$txt = Otvet($result);
 echo $txt;

@@ -13,8 +13,8 @@
  *
  * Ответ:
  * {
- *   "metka":"cerera#list",
- *   "array":[номер_сообщения1, номер сообщения 2, ... номер сообщения N]
+ *   "data":[номер_сообщения1, номер сообщения 2, ... номер сообщения N]
+ *   "result": true/false
  * }
  *
  */
@@ -39,5 +39,5 @@ while(list($im) = fetchRow($res)) {
   $cnt++;
 }
 // формируем объект-ответ
-$txt = Otvet(__FILE__, $list);
+$txt = Otvet(true, $list);
 echo $txt;

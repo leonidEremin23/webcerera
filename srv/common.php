@@ -204,17 +204,19 @@ function getParSes($namePar)
 
 /**
  * формирование ответа
- * @param $filename - имя файла, как ключ метки
+ * @param $result   - результат true - выполнено, false - ошибка
  * @param $arrout   - массив ответа
  * @return false|string
  */
-function  Otvet($filename, $arrout)
+function Otvet($result, $arrout = null)
 {
-  $metka = 'cerera#' . basename($filename, '.php');
+  // $metka = 'cerera#' . basename($filename, '.php');
 // формируем объект-ответ
+  if($arrout == null)
+    $arrout = array();
   $obj = (object) [
-      'metka' => $metka,
-      'array' => $arrout
+    'data'   => $arrout,
+    'result' => $result
   ];
   $txt = json_encode($obj);
   return $txt;
