@@ -9,7 +9,7 @@
 /*
  * проверка соединения с БД
  */
-require_once "common.php";
+require_once "../common.php";
 
 $cnt = 0;
 $usrlist = array(0);

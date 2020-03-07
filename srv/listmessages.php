@@ -6,10 +6,11 @@
  */
 
 /*
- * список сообщений для пользователя
+ * список сообщений для пользователя-получателя
  * входные параметры:
  *   from - от кого
- *   to   - кому
+ *   to   - кому (получатель)
+ *   pwd  - пароль получателя
  *
  * Ответ:
  * {
@@ -18,26 +19,34 @@
  * }
  *
  */
-require_once "common.php";
+require_once "../common.php";
 
-$from = s2s($_REQUEST['from']);      // имя отправителя
-$to   = s2s($_REQUEST['to']);        // имя получателя
+$from = s2s($_REQUEST['from']);   // имя отправителя
+$to   = s2s($_REQUEST['to']);     // имя получателя
+$pwd  = s2s($_REQUEST['pwd']);    // пароль получателя
 $ufrom = '';
 $uto   = '';
-if(strlen($from) > 0) {
-  $wfrom = "AND ufrom='$from'";
-}
-if(strlen($to) > 0) {
-  $wto = "AND uto='$to'";
-}
 $list = array();
-$sql = "SELECT im FROM mess WHERE (datr) is null $wfrom $wto ORDER BY im";
-$res = queryDb($sql);
-$cnt = 0;
-while(list($im) = fetchRow($res)) {
-  $list[$cnt] = intval($im);
-  $cnt++;
+// проверить пароль пользователя
+$nn = getVal("SELECT count(*) FROM users WHERE usr='$t' AND pwd='$pwd'");
+$res = (intval($nn) > 0);
+if($res) {
+  // пароль соответствует, будем извлекать список
+  if (strlen($from) > 0) {
+    $wfrom = "AND ufrom='$from'";
+  }
+  if (strlen($to) > 0) {
+    $wto = "AND uto='$to'";
+  }
+  // выборка списка сообщений для получателя
+  $sql = "SELECT im FROM mess WHERE (datr) is null $wfrom $wto ORDER BY im";
+  $res = queryDb($sql);
+  $cnt = 0;
+  while (list($im) = fetchRow($res)) {
+    $list[$cnt] = intval($im);
+    $cnt++;
+  }
 }
 // формируем объект-ответ
-$txt = Otvet(true, $list);
+$txt = Otvet($res, $list);
 echo $txt;

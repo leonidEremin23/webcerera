@@ -18,7 +18,7 @@
  *
  */
 
-require_once "common.php";
+require_once "../common.php";
 
 $usr = s2s($_REQUEST['usr']);        // имя пользователя
 $otv[0] = '';

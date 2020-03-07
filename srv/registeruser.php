@@ -10,6 +10,7 @@
  * входные параметры:
  *   usr    - имя пользователя
  *   pubkey - строка публичного ключа
+ *   pwd    - пароль пользователя
  *
  * Ответ
  * {
@@ -18,16 +19,17 @@
  * }
  *
  */
-require_once "common.php";
+require_once "../common.php";
 
-$usr = s2s($_REQUEST['usr']);        // имя пользователя
-$pubkey = s2s($_REQUEST['pubkey']);  // публичный ключ
+$usr = s2s($_REQUEST['usr']);         // имя пользователя
+$pubkey = s2s($_REQUEST['pubkey']);   // публичный ключ
+$pwd    = s2s($_REQUEST['pwd']);      // пароль пользователя
 $result = false;
 if(strlen($usr) > 0 && strlen($pubkey) > 16) {
   $sql = "select count(*) from users where usr='$usr'";
   $num = intval(getVal($sql));
   if ($num < 1) {
-    $sql = "INSERT INTO users (usr,pubkey) VALUES ('$usr', '$pubkey')";
+    $sql = "INSERT INTO users (usr,pubkey,pwd) VALUES ('$usr', '$pubkey','$pwd')";
     $a = execSQL($sql);
     if ($a)
       $result = true;

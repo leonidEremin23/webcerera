@@ -2,6 +2,7 @@ CREATE TABLE users (
    id     int AUTO_INCREMENT PRIMARY KEY        COMMENT 'индекс',
    usr    varchar(32) UNIQUE                    COMMENT 'имя пользователя',
    pubkey text                                  COMMENT 'публичный ключ',
+   pwd    varchar(255)                          COMMENT 'пароль пользователя',
    prim   varchar(255)                          COMMENT 'примечание',
    last   datetime                              COMMENT 'дата последнего обращения',
    wdat   timestamp DEFAULT current_timestamp() COMMENT 'время записи'

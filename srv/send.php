@@ -9,6 +9,7 @@
  * Отправка сообщения пользователю
  * входные параметры:
  *   from - имя отправителя
+ *   pwd  - пароль отправителя
  *   to   - имя получателя
  *   msg  - текст сообщения (зашифрованный)
  *
@@ -19,15 +20,16 @@
  * }
  *
  */
-require_once "common.php";
+require_once "../common.php";
 
-$from = s2s($_REQUEST['from']);        // имя отправителя
-$to   = s2s($_REQUEST['to']);        // имя получателя
-$msg  = s2s($_REQUEST['msg']);  // сообщение
+$from = s2s($_REQUEST['from']);   // имя отправителя
+$pwd  = s2s($_REQUEST['pwd']);    // пароль отправителя
+$to   = s2s($_REQUEST['to']);     // имя получателя
+$msg  = s2s($_REQUEST['msg']);    // сообщение
 $result = false;
-$n1 = getVal("SELECT count(*) FROM users WHERE usr='$from'");
+$n1 = getVal("SELECT count(*) FROM users WHERE usr='$from' AND pwd='$pwd'");
 $n2 = getVal("SELECT count(*) FROM users WHERE usr='$to'");
-if($n1==1 && $n2==1 && strlen($msg)>0) {
+if(intval($n1)==1 && intval($n2)==1 && strlen($msg)>0) {
   $sql = "INSERT INTO mess (ufrom,uto,msg) VALUES (?,?,?)";
   $stmt = prepareSql($sql);
   $stmt->bind_param('sss', $from, $to, $msg);
@@ -39,4 +41,3 @@ if($n1==1 && $n2==1 && strlen($msg)>0) {
 }
 $txt = Otvet($result);
 echo $txt;
-

@@ -8,7 +8,8 @@
 /*
  * выдать сообщение и сделать отметку о прочтении
  * входные параметры:
- *   im - индекс сообщения
+ *   im  - индекс сообщения
+ *   pwd - пароль пользователя-получателя
  *
  * Ответ:
  * {
@@ -17,17 +18,28 @@
  * }
  *
  */
-require_once "common.php";
+require_once "../common.php";
 
-$im = intval($_REQUEST['im']);        // номер сообщения
+$im = intval($_REQUEST['im']);  // номер сообщения
+$pwd = s2s($_REQUEST['pwd']);   // пароль получателя
 $a = array();
 list($f,$t,$m,$w) = getVals("SELECT ufrom,uto,msg,wdat FROM mess WHERE im=$im");
-$a[0] = $f;
-$a[1] = $t;
-$a[2] = $m;
-$a[3] = $w;
-// отметим, что прочитали сообщение
-execSQL("UPDATE mess SET datr=NOW() WHERE im=$im");
+// проверить пароль пользователя
+$nn = getVal("SELECT count(*) FROM users WHERE usr='$t' AND pwd='$pwd'");
+if(intval($nn) > 0) {
+  // пароль верный
+  // заполним данные сообщения
+  $a[0] = $f; // от кого
+  $a[1] = $t; // кому сообщение
+  $a[2] = $m; // сообщение
+  $a[3] = $w; // дата сообщения
+  $result = true;
+  // отметим, что прочитали сообщение
+  execSQL("UPDATE mess SET datr=NOW() WHERE im=$im");
+} else {
+  // неправильный пользователь
+  $result = false;
+}
 // формируем объект-ответ
-$txt = Otvet(!empty($f), $a);
+$txt = Otvet($result, $a);
 echo $txt;
