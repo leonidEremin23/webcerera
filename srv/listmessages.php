@@ -28,9 +28,9 @@ $ufrom = '';
 $uto   = '';
 $list = array();
 // проверить пароль пользователя
-$nn = getVal("SELECT count(*) FROM users WHERE usr='$t' AND pwd='$pwd'");
-$res = (intval($nn) > 0);
-if($res) {
+$nn = getVal("SELECT count(*) FROM users WHERE usr='$to' AND pwd='$pwd'");
+$otv = (intval($nn) > 0);
+if($otv) {
   // пароль соответствует, будем извлекать список
   if (strlen($from) > 0) {
     $wfrom = "AND ufrom='$from'";
@@ -48,5 +48,5 @@ if($res) {
   }
 }
 // формируем объект-ответ
-$txt = Otvet($res, $list);
+$txt = Otvet($otv, $list);
 echo $txt;
