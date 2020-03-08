@@ -10,7 +10,7 @@
 
  */
 
-require_once "srv/common.php";
+require_once "common.php";
 
 $dat = date('H:i:s'); //
 echo <<<_EOF
