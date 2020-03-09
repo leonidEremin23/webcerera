@@ -14,7 +14,10 @@
  *
  * Ответ:
  * {
- *   "data":[номер_сообщения1, номер сообщения 2, ... номер сообщения N]
+ *   "data":
+ *    ["номер1", "отправитель", "получатель", "дата1"],
+ *    ["номер2", "отправитель", "получатель", "дата2"],
+ *    ["номер3", "отправитель", "получатель", "дата3"],
  *   "result": true/false
  * }
  *
@@ -39,11 +42,11 @@ if($otv) {
     $wto = "AND uto='$to'";
   }
   // выборка списка сообщений для получателя
-  $sql = "SELECT im FROM mess WHERE (datr) is null $wfrom $wto ORDER BY im";
+  $sql = "SELECT im,ufrom,uto,wdat FROM mess WHERE (datr) is null $wfrom $wto ORDER BY im";
   $res = queryDb($sql);
   $cnt = 0;
-  while (list($im) = fetchRow($res)) {
-    $list[$cnt] = intval($im);
+  while ($ro = fetchRow($res)) {
+    $list[$cnt] = $ro;  // intval($ro[0]);
     $cnt++;
   }
 }
