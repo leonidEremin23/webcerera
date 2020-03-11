@@ -25,7 +25,7 @@ $usr = s2s($_REQUEST['usr']);         // имя пользователя
 $pubkey = s2s($_REQUEST['pubkey']);   // публичный ключ
 $pwd    = s2s($_REQUEST['pwd']);      // пароль пользователя
 $result = false;
-if(strlen($usr) > 0 && strlen($pubkey) > 16) {
+if(strlen($usr) > 0 && strlen($pubkey) > 16 && strlen($pwd) > 0) {
   $sql = "select count(*) from users where usr='$usr'";
   $num = intval(getVal($sql));
   if ($num < 1) {

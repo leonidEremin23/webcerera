@@ -29,10 +29,13 @@ _EOF;
 
 echo "$dat<br>\n";
 echo "<table class='spis'>";
-$sql = "SELECT ufrom, uto,DATE_FORMAT(wdat,'%H:%i:%s'), LEFT(msg, 64) FROM mess ORDER BY wdat DESC ";
+$sql = "SELECT ufrom, uto,DATE_FORMAT(wdat,'%H:%i:%s'), LEFT(msg, 64) FROM mess ORDER BY wdat DESC LIMIT 100";
 $rst = queryDb($sql);
+$count = 0;
 while(list($ufrom, $uto, $wdat, $msg) = fetchRow($rst)) {
+  $count++;
   echo "<tr>";
+  echo "<td class='spis'><small>$count</small></td>";
   echo "<td class='spis'>$ufrom</td>";
   echo "<td class='spis'>$uto</td>";
   echo "<td class='spis'>$wdat</td>";

@@ -23,20 +23,21 @@ require_once "../common.php";
 $im = intval($_REQUEST['im']);  // номер сообщения
 $pwd = s2s($_REQUEST['pwd']);   // пароль получателя
 $a = array();
+// прочитаем сообщение и узнаем кому оно направлено ($t)
 list($f,$t,$m,$w) = getVals("SELECT ufrom,uto,msg,wdat FROM mess WHERE im=$im");
-// проверить пароль пользователя
+// проверить пароль пользователя-получателя
 $nn = getVal("SELECT count(*) FROM users WHERE usr='$t' AND pwd='$pwd'");
 if(intval($nn) > 0) {
-  // пароль верный
-  // заполним данные сообщения
+  // пароль верный, заполним данные сообщения
   $a[0] = $f; // от кого
   $a[1] = $t; // кому сообщение
   $a[2] = $m; // сообщение
   $a[3] = $w; // дата сообщения
-  $result = true;
   // отметим дату, что прочитали сообщение
   execSQL("UPDATE mess SET datr=NOW() WHERE im=$im");
+  $result = true;
 } else {
+  sleep(4); // в случае ошибки задержимся
   // неправильный пользователь
   $result = false;
 }

@@ -26,10 +26,12 @@ $from = s2s($_REQUEST['from']);   // имя отправителя
 $pwd  = s2s($_REQUEST['pwd']);    // пароль отправителя
 $to   = s2s($_REQUEST['to']);     // имя получателя
 $msg  = s2s($_REQUEST['msg']);    // сообщение
+
 $result = false;
 $n1 = getVal("SELECT count(*) FROM users WHERE usr='$from' AND pwd='$pwd'");
 $n2 = getVal("SELECT count(*) FROM users WHERE usr='$to'");
 if(intval($n1)==1 && intval($n2)==1 && strlen($msg)>0) {
+  // запишем в БД сведения о сообщении
   $sql = "INSERT INTO mess (ufrom,uto,msg) VALUES (?,?,?)";
   $stmt = prepareSql($sql);
   $stmt->bind_param('sss', $from, $to, $msg);
@@ -38,6 +40,8 @@ if(intval($n1)==1 && intval($n2)==1 && strlen($msg)>0) {
     execSQL("UPDATE users SET last=NOW() WHERE usr='$from'");
     $result = true;
   }
+} else {
+  sleep(4); // в случае ошибки задержимся
 }
 $txt = Otvet($result);
 echo $txt;
