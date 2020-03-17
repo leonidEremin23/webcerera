@@ -38,7 +38,7 @@ if(intval($n1)==1 && intval($n2)==1 && strlen($msg)>0) {
   $stmt->bind_param('sss', $from, $to, $msg);
   if($stmt->execute()) {
     $aid = mysqli_stmt_insert_id($stmt); //$MyDb->insert_id;  // введенное autoincrement id
-    $otv[0] = "" . $aid;
+    $otv[0] = "$aid";
     // отметим время последнего обращения пользователя "from"
     execSQL("UPDATE users SET last=NOW() WHERE usr='$from'");
     $result = true;
