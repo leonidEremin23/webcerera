@@ -35,5 +35,8 @@ if(strlen($usr) > 0 && strlen($pubkey) > 16 && strlen($pwd) > 0) {
       $result = true;
   }
 }
+if(!$result) {
+  sleep(4);
+}
 $txt = Otvet($result);
 echo $txt;
