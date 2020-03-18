@@ -16,7 +16,7 @@
  * Ответ:
  * {
  *   "data": ["номер_сообщения"],
- *   "result": true/false
+ *   "result": true|false
  * }
  *
  */

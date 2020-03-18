@@ -15,7 +15,7 @@
  * Ответ
  * {
  *   "data": [],
- *   "result": true/false
+ *   "result": true|false
  * }
  *
  */

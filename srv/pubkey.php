@@ -13,7 +13,7 @@
  * Ответ:
  * {
  *   "data": ["<public key>"],
- *   "result": true/false
+ *   "result": true|false
  * }
  *
  */
