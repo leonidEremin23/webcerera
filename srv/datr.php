@@ -8,27 +8,31 @@
 /*
  * Узнать дату(время) чтения сообщения
  * входные параметры:
- *   im  - индекс сообщения
- *   pwd - пароль пользователя-отправителя
+ *  im  - номер сообщения
+ *  pwd - пароль пользователя-отправителя
  *
- *  Ответ:
+ * Ответ А:
  * {
- *   "data":[дата_чтения]
+ *   "data": ["дата_чтения"]
  *   "result": true|false
  * }
  *
  */
 
 require_once "../common.php";
-
-$im = intval($_REQUEST['im']);  // номер сообщения
+if(array_key_exists("im", $_REQUEST)) {
+  $im = intval($_REQUEST["im"]);
+} else {
+  $im = 0;
+}
 $pwd = s2s($_REQUEST['pwd']);   // пароль получателя
 $a = array();
+// задан номер сообщения "im"
 // прочитаем сообщение и узнаем от кого.
-list($f,$d) = getVals("SELECT ufrom,datr FROM mess WHERE im=$im");
+list($f) = getVals("SELECT ufrom FROM mess WHERE im=" . intval($imsa[0]));
 // проверить пароль пользователя
 $nn = getVal("SELECT count(*) FROM users WHERE usr='$f' AND pwd='$pwd'");
-if(intval($nn) > 0) {
+if (intval($nn) > 0) {
   // пароль верный, заполним данные сообщения
   $a[0] = $d; // дата чтения сообщения
   $result = true;
