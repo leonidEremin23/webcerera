@@ -20,6 +20,7 @@
  */
 
 require_once "../common.php";
+
 if(array_key_exists("im", $_REQUEST)) {
   $im = intval($_REQUEST["im"]);
 } else {
@@ -29,7 +30,7 @@ $pwd = s2s($_REQUEST['pwd']);   // пароль получателя
 $a = array();
 // задан номер сообщения "im"
 // прочитаем сообщение и узнаем от кого.
-list($f) = getVals("SELECT ufrom FROM mess WHERE im=" . intval($imsa[0]));
+list($f,$d) = getVals("SELECT ufrom,wdat FROM mess WHERE im=$im");
 // проверить пароль пользователя
 $nn = getVal("SELECT count(*) FROM users WHERE usr='$f' AND pwd='$pwd'");
 if (intval($nn) > 0) {
