@@ -11,7 +11,10 @@ require_once "MyDB.php";
 // объект базы данных
 $My_Db = new MyDB() ;
 // запуск сессии
-session_start();
+//session_start();
+
+// пауза при ошибке идентификации
+define('ERROR_AUTH_SLEEP', 4);
 
 /**
  * Преобразование даты из формата SQL в строку русского формата DD.MM.YYYY

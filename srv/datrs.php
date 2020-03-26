@@ -61,6 +61,8 @@ try {
 } catch (Exception $e) {
   $result = false;
 }
+if(!$result)
+  sleep(ERROR_AUTH_SLEEP);
 // формируем объект-ответ
 $txt = Otvet($result, $a);
 echo $txt;

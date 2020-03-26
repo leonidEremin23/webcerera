@@ -36,7 +36,7 @@ if(strlen($usr) > 0 && strlen($pubkey) > 16 && strlen($pwd) > 0) {
   }
 }
 if(!$result) {
-  sleep(4);
+  sleep(ERROR_AUTH_SLEEP);
 }
 $txt = Otvet($result);
 echo $txt;

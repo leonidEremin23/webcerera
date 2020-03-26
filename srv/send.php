@@ -44,7 +44,7 @@ if(intval($n1)==1 && intval($n2)==1 && strlen($msg)>0) {
     $result = true;
   }
 } else {
-  sleep(4); // в случае ошибки задержимся
+  sleep(ERROR_AUTH_SLEEP); // в случае ошибки задержимся
 }
 $txt = Otvet($result, $otv);
 echo $txt;

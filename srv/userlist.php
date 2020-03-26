@@ -27,6 +27,7 @@ while(list($n1) = fetchRow($res)) {
   $usrlist[$cnt] = $n1;
   $cnt++;
 }
+sleep(ERROR_AUTH_SLEEP);
 // формируем объект-ответ
 $txt = Otvet(true, $usrlist);
 echo $txt;

@@ -28,7 +28,7 @@ if(strlen($pubkey) > 16) {
   $result = true;
   $otv[0] = $pubkey;
 } else {
-  sleep(4); // в случае ошибки задержимся
+  sleep(ERROR_AUTH_SLEEP); // в случае ошибки задержимся
 }
 $txt = Otvet($result, $otv);
 echo $txt;

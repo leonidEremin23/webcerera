@@ -37,7 +37,7 @@ if(intval($nn) > 0) {
   execSQL("UPDATE mess SET datr=NOW() WHERE im=$im");
   $result = true;
 } else {
-  sleep(4); // в случае ошибки задержимся
+  sleep(ERROR_AUTH_SLEEP); // в случае ошибки задержимся
   // неправильный пользователь
   $result = false;
 }
