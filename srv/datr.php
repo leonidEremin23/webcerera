@@ -6,9 +6,9 @@
  */
 
 /*
- * Узнать дату(время) чтения нескольких сообщений сразу
+ * Узнать дату(время) чтения нескольких сообщений по списку
  * входные параметры:
- *  ims - индексы сообщений [N1,N2,...N3]
+ *  ims - индексы сообщений (массив JSON) [N1,N2,...N3]
  *  pwd - пароль пользователя-отправителя
  *
  * {
@@ -33,14 +33,11 @@ $pwd = s2s($_REQUEST['pwd']);   // пароль получателя
 $a = array();
 // задан список номеров ims [N1,N2...]
 try {
-  $imsa = json_decode($ims);
-  $stri = '(';
-  $per = '';
-  foreach ($imsa as $im) {
-    $stri = $stri . $per . intval($im);
-    $per = ',';
-  }
-  $stri = $stri . ')';
+  // уберем все апострофы, кавычки и точки с запятой
+  $search = array("'",'"', ';');
+  $str = str_replace($search,' ', $ims);
+  $imsa = json_decode($str);  // сделаем из JSON массив чисел
+  $stri = implode(',', $imsa);  // сделаем из массива список
   //
   // прочитаем сообщение и узнаем от кого
   list($f) = getVals("SELECT ufrom FROM mess WHERE im=" . intval($imsa[0]));
@@ -49,7 +46,7 @@ try {
   if(intval($nn) > 0) {
     // пароль верный, заполним данные сообщения
     $a = array(); // данные дат чтения сообщений
-    $res = queryDb("SELECT im,datr FROM mess WHERE im IN " . $stri);
+    $res = queryDb("SELECT im,datr FROM mess WHERE im IN ($stri)");
     $i = 0;
     while($r = fetchRow($res)) {
       $a[$i++] = $r;
