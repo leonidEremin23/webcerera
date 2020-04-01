@@ -24,16 +24,12 @@
 
 require_once "../common.php";
 
-if(array_key_exists("ims", $_REQUEST)) {
-  $ims = $_REQUEST['ims'];  // номера сообщения
-} else {
-  $ims = "[0]";
-}
+$ims = $_REQUEST['ims'];        // список номеров сообщений
 $pwd = s2s($_REQUEST['pwd']);   // пароль получателя
-$a = array();
-// задан список номеров ims [N1,N2...]
+$a = array();                   // массив ответа
 try {
   // уберем все апострофы, кавычки и точки с запятой
+  // из списка номеров сообщений
   $search = array("'",'"', ';');
   $str = str_replace($search,' ', $ims);
   $imsa = json_decode($str);  // сделаем из JSON массив чисел
@@ -45,7 +41,6 @@ try {
   $nn = getVal("SELECT count(*) FROM users WHERE usr='$f' AND pwd='$pwd'");
   if(intval($nn) > 0) {
     // пароль верный, заполним данные сообщения
-    $a = array(); // данные дат чтения сообщений
     $res = queryDb("SELECT im,datr FROM mess WHERE im IN ($stri)");
     $i = 0;
     while($r = fetchRow($res)) {
